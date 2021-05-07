@@ -4,9 +4,11 @@ import Input from "components/input"
 import Button from "components/button"
 
 const LoginForm: FC = () => {
+  const { user, login, logout } = useAuth()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const { user, login } = useAuth()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value)
@@ -16,32 +18,66 @@ const LoginForm: FC = () => {
     setPassword(e.target.value)
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    login({ username, password })
+
+    try {
+      setError(false)
+      setLoading(true)
+      await login({ username, password })
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      setLoading(true)
+      await logout()
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <h2>Login</h2>
-      <Input
-        label='Username'
-        type='text'
-        name='username'
-        id='username'
-        value={username}
-        onChange={handleUsernameChange}
-      />
-      <Input
-        label='Password'
-        type='password'
-        name='password'
-        id='password'
-        value={password}
-        onChange={handlePasswordChange}
-      />
-      <Button>Login</Button>
-    </form>
+      <div>
+        {user && (
+          <div>
+            {user.name}{" "}
+            <button type='button' onClick={handleLogout}>
+              logout
+            </button>
+          </div>
+        )}
+      </div>
+      <div>{error && <div>{error}</div>}</div>
+      <div>{loading && <div>loading...</div>}</div>
+      <form onSubmit={handleSubmit}>
+        <Input
+          label='Username'
+          type='text'
+          name='username'
+          id='username'
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <Input
+          label='Password'
+          type='password'
+          name='password'
+          id='password'
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <Button type='submit'>Login</Button>
+      </form>
+    </>
   )
 }
 

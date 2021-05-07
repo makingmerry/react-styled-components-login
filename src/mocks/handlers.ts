@@ -55,4 +55,7 @@ export const handlers = [
     }
     return res(ctx.status(200), ctx.delay(500), ctx.json(user))
   }),
+  rest.post("/api/logout", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(500), ctx.json({ success: true }))
+  }),
 ]
