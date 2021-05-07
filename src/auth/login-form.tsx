@@ -1,15 +1,24 @@
-import { useState, FC } from "react"
+import { useState, FC, FormEvent, ChangeEvent } from "react"
 import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
 
 const LoginForm: FC = () => {
-  const { isAuthenticated } = useAuth()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const { user, login } = useAuth()
 
-  const handleSubmit = () => {
-    console.log("submiting...")
+  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    login({ username, password })
   }
 
   return (
@@ -21,7 +30,7 @@ const LoginForm: FC = () => {
         name='username'
         id='username'
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={handleUsernameChange}
       />
       <Input
         label='Password'
@@ -29,7 +38,7 @@ const LoginForm: FC = () => {
         name='password'
         id='password'
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
       <Button>Login</Button>
     </form>
