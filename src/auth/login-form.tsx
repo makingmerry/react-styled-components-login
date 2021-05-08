@@ -147,7 +147,7 @@ const LoginForm: FC = () => {
       </div>
       <div>{error && <div>{error}</div>}</div>
       <div>{submitting && <div>submitting...</div>}</div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'
           type='text'
@@ -156,14 +156,8 @@ const LoginForm: FC = () => {
           value={values.username}
           maxLength={60}
           onChange={(e) => handleInputChange(e, "username")}
+          errors={inputErrors.username}
         />
-        {inputErrors.username.length > 0 && (
-          <ul>
-            {inputErrors.username.map((line, i) => (
-              <li key={i}>{line}</li>
-            ))}
-          </ul>
-        )}
         <Input
           label='Password'
           type='password'
@@ -172,14 +166,8 @@ const LoginForm: FC = () => {
           maxLength={60}
           value={values.password}
           onChange={(e) => handleInputChange(e, "password")}
+          errors={inputErrors.password}
         />
-        {inputErrors.password.length > 0 && (
-          <ul>
-            {inputErrors.password.map((line, i) => (
-              <li key={i}>{line}</li>
-            ))}
-          </ul>
-        )}
         <Button type='submit'>Login</Button>
       </form>
     </>
