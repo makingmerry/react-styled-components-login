@@ -66,25 +66,26 @@ const LoginForm: FC = () => {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(false)
 
+  const flatInputErrors = Object.values(inputErrors).flat()
+  const invalidInputs = flatInputErrors.length > 0
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     name: string
   ) => {
     e.preventDefault()
 
+    setError(false)
+
     const { value } = e.target
-    const errors = validate(name, value)
+    validateInput(name, value)
     setValues((prev) => ({
       ...prev,
       [name]: value,
     }))
-    setInputErrors((prev) => ({
-      ...prev,
-      [name]: errors,
-    }))
   }
 
-  const validate = (name: string, value: string) => {
+  const validateInput = (name: string, value: string) => {
     // reference input constraints for validators,
     // otherwise return no error messages
     const input = constraintsRef.current[name]
@@ -101,11 +102,29 @@ const LoginForm: FC = () => {
       // filter out valid values from error lines
       .filter((error) => error)
 
-    return errors as string[]
+    setInputErrors((prev) => ({
+      ...prev,
+      [name]: errors as string[],
+    }))
+
+    const result = errors.length === 0
+    return result
+  }
+
+  const validate = () => {
+    const errors = Object.entries(values)
+      .map(([name, value]) => !validateInput(name, value))
+      .filter((error) => error)
+
+    const result = errors.length === 0
+    return result
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const valid = validate()
+    if (!valid) return
 
     try {
       setError(false)
@@ -168,7 +187,9 @@ const LoginForm: FC = () => {
           onChange={(e) => handleInputChange(e, "password")}
           errors={inputErrors.password}
         />
-        <Button type='submit'>Login</Button>
+        <Button type='submit' disabled={error || invalidInputs}>
+          Login
+        </Button>
       </form>
     </>
   )
