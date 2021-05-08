@@ -6,7 +6,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<IInputProps> = ({ label, ...props }) => {
   return (
-    <label>
+    <label style={{ display: "block", marginTop: "10px" }}>
       {label && <span>{label}</span>}
       <input {...props} />
     </label>
