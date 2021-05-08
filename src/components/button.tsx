@@ -44,10 +44,17 @@ const StyledButton = styled.button`
     transition: opacity var(--transition-fast);
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     &::before {
       opacity: 1;
     }
+  }
+
+  &:disabled {
+    background: var(--silver);
+    color: var(--mid-gray);
+    pointer-events: none;
   }
 `
 
