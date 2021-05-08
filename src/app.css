@@ -13,17 +13,33 @@
 
   --tracking-tight: -0.025em;
   --tracking-normal: 0em;
-  --tracking-wide: 0.15em;
+  --tracking-slight: 0.025em;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.15em;
 
   --rounded-sm: 0.125rem;
   --rounded: 0.25rem;
   --rounded-md: 0.5rem;
 
+  --transition-fast: 75ms;
+
+  --pink: #db2777;
   --indigo: #4338ca;
   --blue: #2563eb;
+  --white: #fff;
+  --silver: #d1d5db;
+  --gray: #9ca3af;
+  --mid-gray: #6b7280;
+  --dark-gray: #374151;
+  --black: #111827;
 
-  --primary-button-bg-from: var(--indigo);
-  --primary-button-bg-to: var(--blue);
+  --error-color: var(--pink);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html,
@@ -36,4 +52,5 @@ body,
   font-family: var(--primary-font);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
+  color: var(--black);
 }

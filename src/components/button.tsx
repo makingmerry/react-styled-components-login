@@ -4,26 +4,30 @@ import styled from "styled-components"
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const StyledButton = styled.button`
+  --primary-button-bg-from: var(--indigo);
+  --primary-button-bg-to: var(--blue);
+  --primary-button-text-color: var(--white);
+
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
-  border: 0;
-  padding: 0.75rem 3rem;
+  margin-top: 1.5rem;
+  padding: 1rem 3rem;
   overflow: hidden;
   font-family: inherit;
   font-size: var(--text-small);
   font-weight: 600;
-  line-height: var(--leading-normal);
   text-transform: uppercase;
   text-align: center;
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
   background: linear-gradient(
     to right,
     var(--primary-button-bg-from),
     var(--primary-button-bg-to)
   );
-  color: white;
+  color: var(--primary-button-text-color);
+  border: 0;
   border-radius: var(--rounded-md);
   cursor: pointer;
 
@@ -37,7 +41,7 @@ const StyledButton = styled.button`
     height: 100%;
     background: var(--primary-button-bg-to);
     opacity: 0;
-    transition: opacity 0.25s;
+    transition: opacity var(--transition-fast);
   }
 
   &:hover {

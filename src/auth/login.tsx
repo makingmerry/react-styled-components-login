@@ -181,6 +181,7 @@ const Login: FC = () => {
           name='username'
           id='username'
           value={values.username}
+          required
           maxLength={60}
           onChange={(e) => handleInputChange(e, "username")}
           errors={inputErrors.username}
@@ -190,8 +191,9 @@ const Login: FC = () => {
           type='password'
           name='password'
           id='password'
-          maxLength={60}
           value={values.password}
+          required
+          maxLength={60}
           onChange={(e) => handleInputChange(e, "password")}
           errors={inputErrors.password}
         />
