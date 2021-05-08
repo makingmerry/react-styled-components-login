@@ -2,6 +2,7 @@ import { useState, useRef, FC, FormEvent, ChangeEvent } from "react"
 import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
+import Alert from "components/alert"
 
 interface IInputs {
   [key: string]: string
@@ -164,8 +165,8 @@ const LoginForm: FC = () => {
           </div>
         )}
       </div>
-      <div>{error && <div>{error}</div>}</div>
-      <div>{submitting && <div>submitting...</div>}</div>
+      {error && <Alert>{error}</Alert>}
+      {submitting && <Alert>submitting...</Alert>}
       <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'
