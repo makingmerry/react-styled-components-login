@@ -3,10 +3,6 @@ import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
 
-const checkEmpty = (value: string) => value.length < 1
-
-const checkMax = (value: string, max: number) => value.length >= max
-
 interface IInputs {
   [key: string]: string
 }
@@ -16,12 +12,44 @@ interface IInputErrors {
 }
 
 interface IOptions {
-  required?: boolean
-  max?: number
+  [key: string]: {
+    validator: (input: string) => boolean
+    message: string
+  }
 }
 
 interface IConstraints {
   [key: string]: IOptions
+}
+
+// custom validators return if input is valid
+const checkEmpty = (input: string): boolean => input.length < 1
+
+const checkMax = (input: string, max: number): boolean => input.length >= max
+
+// constraints for running input values against custom validators
+// constraint keys must match input name attribute
+const constraints: IConstraints = {
+  username: {
+    required: {
+      validator: (input) => checkEmpty(input),
+      message: "Username is required",
+    },
+    max: {
+      validator: (input) => checkMax(input, 60),
+      message: "Maximum of 60 characters",
+    },
+  },
+  password: {
+    required: {
+      validator: (input) => checkEmpty(input),
+      message: "Password is required",
+    },
+    max: {
+      validator: (input) => checkMax(input, 60),
+      message: "Maximum of 60 characters",
+    },
+  },
 }
 
 const LoginForm: FC = () => {
@@ -30,60 +58,47 @@ const LoginForm: FC = () => {
     username: "",
     password: "",
   })
+  const constraintsRef = useRef<IConstraints>(constraints)
   const [inputErrors, setInputErrors] = useState<IInputErrors>({
     username: [],
     password: [],
   })
-  const constraints = useRef<IConstraints>({
-    username: {
-      required: true,
-      max: 60,
-    },
-    password: {
-      required: true,
-      max: 60,
-    },
-  })
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(false)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
     e.preventDefault()
 
     const { value } = e.target
-    const errors = validate(key, value)
+    const errors = validate(name, value)
     setValues((prev) => ({
       ...prev,
-      [key]: value,
+      [name]: value,
     }))
     setInputErrors((prev) => ({
       ...prev,
-      [key]: errors,
+      [name]: errors,
     }))
   }
 
-  const validate = (key: string, value: string) => {
-    const options = constraints.current[key]
-    if (!options) return []
+  const validate = (name: string, value: string) => {
+    // reference input constraints for validators,
+    // otherwise return no error messages
+    const input = constraintsRef.current[name]
+    if (!input) return []
 
-    const errors = Object.entries(options)
-      .map(([symbol, constraint]) => {
-        if (!constraint) return false
-
-        if (symbol === "required") {
-          const empty = checkEmpty(value)
-          if (!empty) return false
-          return `${key} is required`
-        }
-
-        if (symbol === "max") {
-          const max = checkMax(value, constraint)
-          if (!max) return false
-          return `max characters for ${key}`
-        }
-
-        return false
+    // run input value against constraints for errors
+    const errors = Object.values(input)
+      .map((constraint) => {
+        const { validator, message } = constraint
+        const valid = !validator(value)
+        // flag false for valid values
+        return valid ? false : message
       })
+      // filter out valid values from error lines
       .filter((error) => error)
 
     return errors as string[]
