@@ -1,8 +1,16 @@
 import { useState, useRef, FC, FormEvent, ChangeEvent } from "react"
+import styled from "styled-components"
 import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
 import Alert from "components/alert"
+
+// todo
+const StyledLogin = styled.div`
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 40px;
+`
 
 interface IInputs {
   [key: string]: string
@@ -53,7 +61,7 @@ const constraints: IConstraints = {
   },
 }
 
-const LoginForm: FC = () => {
+const Login: FC = () => {
   const { user, login, logout } = useAuth()
   const [values, setValues] = useState<IInputs>({
     username: "",
@@ -153,8 +161,7 @@ const LoginForm: FC = () => {
   }
 
   return (
-    <>
-      <h2>Login</h2>
+    <StyledLogin>
       <div>
         {user && (
           <div>
@@ -192,8 +199,8 @@ const LoginForm: FC = () => {
           Login
         </Button>
       </form>
-    </>
+    </StyledLogin>
   )
 }
 
-export default LoginForm
+export default Login
