@@ -1,9 +1,9 @@
 import { useState, useRef, FC, FormEvent, ChangeEvent } from "react"
-import styled from "styled-components"
 import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
 import Alert from "components/alert"
+import Spinner from "components/spinner"
 
 interface IInputs {
   [key: string]: string
@@ -55,7 +55,7 @@ const constraints: IConstraints = {
 }
 
 const LoginPanel: FC = () => {
-  const { user, login, logout } = useAuth()
+  const { user, login } = useAuth()
   const [values, setValues] = useState<IInputs>({
     username: "",
     password: "",
@@ -68,6 +68,7 @@ const LoginPanel: FC = () => {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(false)
 
+  const loggedIn = user !== false
   const flatInputErrors = Object.values(inputErrors).flat()
   const invalidInputs = flatInputErrors.length > 0
 
@@ -142,29 +143,8 @@ const LoginPanel: FC = () => {
     }
   }
 
-  const handleLogout = async () => {
-    try {
-      setSubmitting(true)
-      await logout()
-    } catch (error) {
-      setError(error.message)
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
   return (
-    <div>
-      <div>
-        {user && (
-          <div>
-            {user.name}{" "}
-            <button type='button' onClick={() => handleLogout()}>
-              logout
-            </button>
-          </div>
-        )}
-      </div>
+    <>
       <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'
@@ -176,7 +156,7 @@ const LoginPanel: FC = () => {
           maxLength={60}
           onChange={(e) => handleInputChange(e, "username")}
           errors={inputErrors.username}
-          disabled={submitting}
+          disabled={loggedIn || submitting}
         />
         <Input
           label='Password'
@@ -188,15 +168,17 @@ const LoginPanel: FC = () => {
           maxLength={60}
           onChange={(e) => handleInputChange(e, "password")}
           errors={inputErrors.password}
-          disabled={submitting}
+          disabled={loggedIn || submitting}
         />
-        <Button type='submit' disabled={submitting || error || invalidInputs}>
-          Login
+        <Button
+          type='submit'
+          disabled={loggedIn || submitting || error || invalidInputs}
+        >
+          {submitting ? <Spinner /> : "Login"}
         </Button>
       </form>
-      {submitting && <Alert>submitting...</Alert>}
       {error && <Alert>{error}</Alert>}
-    </div>
+    </>
   )
 }
 

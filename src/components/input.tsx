@@ -16,8 +16,8 @@ const StyledInput = styled.label`
 
 const StyledLabel = styled.div`
   margin-bottom: 0.5rem;
-  font-size: var(--text-small);
-  font-weight: 600;
+  font-size: var(--text-sm);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--mid-gray);
@@ -63,7 +63,7 @@ const StyledErrors = styled.ul`
   display: block;
   margin-top: 0.5rem;
   list-style: none;
-  font-size: var(--text-small);
+  font-size: var(--text-sm);
   letter-spacing: var(--tracking-slight);
   color: var(--error-color);
 `

@@ -1,32 +1,25 @@
 import { FC } from "react"
 import styled from "styled-components"
-import LoginPanel from "auth/login-panel"
+import LoginForm from "auth/login-form"
+import LoginSuccessDialog from "auth/login-success-dialog"
 
 const StyledLogin = styled.div`
-  display: table;
-  width: 100%;
-  height: 100%;
+  padding: 4rem 1.5rem;
 `
 
-const StyledMiddle = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-`
-
-const StyledCenter = styled.div`
-  max-width: 30rem;
+const StyledFrame = styled.div`
+  position: relative;
+  max-width: 28rem;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
 `
 
 const Login: FC = () => {
   return (
     <StyledLogin>
-      <StyledMiddle>
-        <StyledCenter>
-          <LoginPanel />
-        </StyledCenter>
-      </StyledMiddle>
+      <StyledFrame>
+        <LoginSuccessDialog />
+        <LoginForm />
+      </StyledFrame>
     </StyledLogin>
   )
 }

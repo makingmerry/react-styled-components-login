@@ -4,7 +4,7 @@ import styled from "styled-components"
 const StyledAlert = styled.div`
   margin: 1.5rem 0;
   padding: 1rem;
-  font-size: var(--text-small);
+  font-size: var(--text-sm);
   letter-spacing: var(--tracking-slight);
   color: var(--error-color);
   background: var(--error-bg);

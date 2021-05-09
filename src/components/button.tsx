@@ -16,8 +16,8 @@ const StyledButton = styled.button`
   padding: 1rem 3rem;
   overflow: hidden;
   font-family: inherit;
-  font-size: var(--text-small);
-  font-weight: 600;
+  font-size: var(--text-sm);
+  font-weight: 700;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: var(--tracking-wider);
@@ -54,10 +54,6 @@ const StyledButton = styled.button`
       background var(--transition-fast);
   }
 
-  &:focus {
-    outline: 0;
-  }
-
   &:hover,
   &:focus {
     &::before {
@@ -67,11 +63,11 @@ const StyledButton = styled.button`
 
   &:disabled {
     pointer-events: none;
+    color: var(--mid-gray);
 
     &::before {
       opacity: 1;
       background: var(--silver);
-      color: var(--mid-gray);
     }
   }
 `

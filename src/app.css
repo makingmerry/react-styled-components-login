@@ -1,10 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
 :root {
   --primary-font: "Open Sans", sans-serif;
 
-  --text-small: 0.875rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
+  --text-md: 1.15rem;
 
   --leading-none: 1;
   --leading-tight: 1.25;
@@ -20,6 +21,7 @@
   --rounded-sm: 0.125rem;
   --rounded: 0.25rem;
   --rounded-md: 0.5rem;
+  --rounded-lg: 1rem;
 
   --transition-fast: 100ms;
 
@@ -27,6 +29,7 @@
   --pink: #db2777;
   --indigo: #4338ca;
   --blue: #2563eb;
+  --dark-blue: #1e40af;
   --white: #fff;
   --near-white: #f4f5f7;
   --light-gray: #e5e7eb;
@@ -57,4 +60,8 @@ body,
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--black);
+}
+
+button:focus {
+  outline: 0;
 }
