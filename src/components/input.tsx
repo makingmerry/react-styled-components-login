@@ -37,15 +37,25 @@ const StyledField = styled.input<IStyledField>`
   padding: 0.75rem;
   font-family: inherit;
   font-size: inherit;
+  color: var(--dark-gray);
+  background: var(--near-white);
   border: 1px solid var(--gray);
   border: 1px solid
     ${({ errors }) => (errors ? "var(--error-color)" : "var(--gray)")};
   border-radius: var(--rounded-md);
-  transition: border-color var(--transition-fast);
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
 
   &:focus {
+    color: var(--black);
+    background: var(--white);
     border-color: var(--blue);
     outline: 0;
+  }
+
+  &:disabled {
+    background: var(--light-gray);
+    color: var(--gray);
   }
 `
 

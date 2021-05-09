@@ -12,7 +12,7 @@ const StyledButton = styled.button`
   z-index: 1;
   display: block;
   width: 100%;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   padding: 1rem 3rem;
   overflow: hidden;
   font-family: inherit;
@@ -29,7 +29,16 @@ const StyledButton = styled.button`
   color: var(--primary-button-text-color);
   border: 0;
   border-radius: var(--rounded-md);
+  transition: color var(--transition-fast);
   cursor: pointer;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   &::before {
     content: "";
@@ -41,7 +50,12 @@ const StyledButton = styled.button`
     height: 100%;
     background: var(--primary-button-bg-to);
     opacity: 0;
-    transition: opacity var(--transition-fast);
+    transition: opacity var(--transition-fast),
+      background var(--transition-fast);
+  }
+
+  &:focus {
+    outline: 0;
   }
 
   &:hover,
@@ -52,9 +66,13 @@ const StyledButton = styled.button`
   }
 
   &:disabled {
-    background: var(--silver);
-    color: var(--mid-gray);
     pointer-events: none;
+
+    &::before {
+      opacity: 1;
+      background: var(--silver);
+      color: var(--mid-gray);
+    }
   }
 `
 

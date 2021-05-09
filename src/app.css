@@ -21,18 +21,22 @@
   --rounded: 0.25rem;
   --rounded-md: 0.5rem;
 
-  --transition-fast: 75ms;
+  --transition-fast: 100ms;
 
+  --light-pink: #fdf2f8;
   --pink: #db2777;
   --indigo: #4338ca;
   --blue: #2563eb;
   --white: #fff;
+  --near-white: #f4f5f7;
+  --light-gray: #e5e7eb;
   --silver: #d1d5db;
   --gray: #9ca3af;
   --mid-gray: #6b7280;
   --dark-gray: #374151;
   --black: #111827;
 
+  --error-bg: var(--light-pink);
   --error-color: var(--pink);
 }
 

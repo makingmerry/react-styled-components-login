@@ -5,13 +5,6 @@ import Input from "components/input"
 import Button from "components/button"
 import Alert from "components/alert"
 
-// todo
-const StyledLogin = styled.div`
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 40px;
-`
-
 interface IInputs {
   [key: string]: string
 }
@@ -61,7 +54,7 @@ const constraints: IConstraints = {
   },
 }
 
-const Login: FC = () => {
+const LoginPanel: FC = () => {
   const { user, login, logout } = useAuth()
   const [values, setValues] = useState<IInputs>({
     username: "",
@@ -161,7 +154,7 @@ const Login: FC = () => {
   }
 
   return (
-    <StyledLogin>
+    <div>
       <div>
         {user && (
           <div>
@@ -172,8 +165,6 @@ const Login: FC = () => {
           </div>
         )}
       </div>
-      {error && <Alert>{error}</Alert>}
-      {submitting && <Alert>submitting...</Alert>}
       <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'
@@ -185,6 +176,7 @@ const Login: FC = () => {
           maxLength={60}
           onChange={(e) => handleInputChange(e, "username")}
           errors={inputErrors.username}
+          disabled={submitting}
         />
         <Input
           label='Password'
@@ -196,13 +188,16 @@ const Login: FC = () => {
           maxLength={60}
           onChange={(e) => handleInputChange(e, "password")}
           errors={inputErrors.password}
+          disabled={submitting}
         />
-        <Button type='submit' disabled={error || invalidInputs}>
+        <Button type='submit' disabled={submitting || error || invalidInputs}>
           Login
         </Button>
       </form>
-    </StyledLogin>
+      {submitting && <Alert>submitting...</Alert>}
+      {error && <Alert>{error}</Alert>}
+    </div>
   )
 }
 
-export default Login
+export default LoginPanel
