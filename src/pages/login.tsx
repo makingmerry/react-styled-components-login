@@ -5,12 +5,23 @@ import { useAuth } from "auth/auth-context"
 import LoginForm from "auth/login-form"
 import LoginSuccessDialog from "auth/login-success-dialog"
 
-const StyledLogin = styled.div`
+const StyledLogin = styled(motion.div)`
   padding: 4rem 1.5rem;
+`
+
+const StyledBackground = styled(motion.div)`
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
 `
 
 const StyledFrame = styled.div`
   position: relative;
+  z-index: 2;
   max-width: 28rem;
   margin: 0 auto;
   perspective: 40rem;
@@ -24,7 +35,7 @@ const StyledCard = styled(motion.div)`
 const StyledCardFront = styled.div`
   backface-visibility: hidden;
   overflow: hidden;
-  border-radius: var(--rounded-lg);
+  border-radius: var(--rounded-md);
   box-shadow: 0 0.175rem 0.1375rem rgba(0, 0, 0, 0.034),
     0 0.41875rem 0.33125rem rgba(0, 0, 0, 0.048),
     0 0.78125rem 0.625rem rgba(0, 0, 0, 0.06),
@@ -42,7 +53,7 @@ const StyledCardBack = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: var(--rounded-lg);
+  border-radius: var(--rounded-md);
   transform: rotateY(-180deg);
 `
 
@@ -53,16 +64,37 @@ const Login: FC = () => {
   // flip from login to success if logged in and vice versa
   useEffect(() => {
     if (user) {
-      controls.start({ rotateY: "180deg" })
+      controls.start("show")
       return
     }
-    controls.start({ rotateY: "0deg" })
+    controls.start("hidden")
   }, [controls, user])
 
   return (
-    <StyledLogin>
+    <StyledLogin
+      variants={{
+        hidden: {},
+        show: {},
+      }}
+      transition={{
+        staggerChildren: 0.15,
+      }}
+      animate={controls}
+    >
+      <StyledBackground
+        variants={{
+          hidden: { translateX: 0 },
+          show: { translateX: "100%" },
+        }}
+        transition={{ type: "tween", velocity: 50 }}
+      />
       <StyledFrame>
-        <StyledCard animate={controls}>
+        <StyledCard
+          variants={{
+            hidden: { rotateY: "0deg" },
+            show: { rotateY: "180deg" },
+          }}
+        >
           <StyledCardFront>
             <LoginForm />
           </StyledCardFront>
