@@ -36,7 +36,7 @@ export const handlers = [
       return res(
         ctx.status(403),
         ctx.delay(500),
-        ctx.json({ message: "User not found" })
+        ctx.json({ message: "We cannot find an account with that username" })
       )
     }
 
@@ -45,7 +45,7 @@ export const handlers = [
       return res(
         ctx.status(403),
         ctx.delay(500),
-        ctx.json({ message: "Username/password is incorrect" })
+        ctx.json({ message: "The username or password is incorrect" })
       )
     }
 
