@@ -115,6 +115,10 @@ const Field: FC<IFieldProps> = ({ errors, ...props }) => (
 const PasswordField: FC<IFieldProps> = ({ errors, type, ...props }) => {
   const [show, setShow] = useState(false)
 
+  const handleToggle = () => {
+    setShow(!show)
+  }
+
   return (
     <StyledFieldWithIconFrame>
       <StyledField
@@ -125,9 +129,7 @@ const PasswordField: FC<IFieldProps> = ({ errors, type, ...props }) => {
       <StyledFieldIconButton
         type='button'
         active={show}
-        onClick={() => {
-          setShow(!show)
-        }}
+        onClick={() => handleToggle()}
       >
         <FontAwesomeIcon icon={show ? faEyeSlash : faEye} />
       </StyledFieldIconButton>
