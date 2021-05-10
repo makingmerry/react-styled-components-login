@@ -27,11 +27,7 @@ const StyledRequired = styled.span`
   color: var(--error-color);
 `
 
-interface IStyledField {
-  errors: boolean
-}
-
-const StyledField = styled.input<IStyledField>`
+const StyledField = styled.input<{ errors: boolean }>`
   display: block;
   width: 100%;
   padding: 0.75rem;

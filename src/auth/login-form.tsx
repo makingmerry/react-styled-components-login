@@ -1,9 +1,16 @@
 import { useState, useRef, FC, FormEvent, ChangeEvent } from "react"
+import styled from "styled-components"
 import { useAuth } from "auth/auth-context"
 import Input from "components/input"
 import Button from "components/button"
 import Alert from "components/alert"
 import Spinner from "components/spinner"
+
+const StyledFormPanel = styled.div`
+  height: 100%;
+  padding: 3rem 2rem 3.5rem;
+  background: var(--white);
+`
 
 interface IInputs {
   [key: string]: string
@@ -57,8 +64,8 @@ const constraints: IConstraints = {
 const LoginPanel: FC = () => {
   const { user, login } = useAuth()
   const [values, setValues] = useState<IInputs>({
-    username: "",
-    password: "",
+    username: "din-djarin",
+    password: "Grogu123",
   })
   const constraintsRef = useRef<IConstraints>(constraints)
   const [inputErrors, setInputErrors] = useState<IInputErrors>({
@@ -144,7 +151,7 @@ const LoginPanel: FC = () => {
   }
 
   return (
-    <>
+    <StyledFormPanel>
       <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'
@@ -178,7 +185,7 @@ const LoginPanel: FC = () => {
         </Button>
       </form>
       {error && <Alert>{error}</Alert>}
-    </>
+    </StyledFormPanel>
   )
 }
 

@@ -6,10 +6,17 @@ import { useAuth } from "auth/auth-context"
 import Spinner from "components/spinner"
 
 const StyledLoginSuccessDialog = styled.div`
+  display: table;
+  height: 100%;
+  width: 100%;
   padding: 2rem;
   text-align: center;
-  background: var(--near-white);
-  border-radius: var(--rounded-lg);
+  background: linear-gradient(to right, var(--indigo), var(--blue));
+`
+
+const StyledContent = styled.div`
+  display: table-cell;
+  vertical-align: middle;
 `
 
 const StyledSymbol = styled.div`
@@ -17,8 +24,8 @@ const StyledSymbol = styled.div`
   width: 3.5rem;
   height: 3.5rem;
   margin: 0 auto;
-  color: var(--blue);
-  border: 0.2rem solid var(--blue);
+  color: var(--green);
+  border: 0.2rem solid var(--green);
   border-radius: 100vw;
 `
 
@@ -34,6 +41,7 @@ const StyledWelcome = styled.div`
   font-size: var(--text-md);
   font-weight: 600;
   line-height: var(--leading-tight);
+  color: var(--white);
 `
 
 const StyledLogout = styled.button`
@@ -45,16 +53,18 @@ const StyledLogout = styled.button`
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
-  color: var(--blue);
+  color: var(--green);
   background: transparent;
   border: none;
-  border-bottom: 0.125rem solid var(--blue);
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast);
   cursor: pointer;
 
   &:hover {
-    color: var(--dark-blue);
-    border-color: var(--dark-blue);
+    color: var(--light-green);
+  }
+
+  &:disabled {
+    color: var(--light-gray);
   }
 `
 
@@ -77,17 +87,23 @@ const LoginSuccessDialog: FC = () => {
 
   return (
     <StyledLoginSuccessDialog>
-      <StyledSymbol>
-        <StyledIcon icon={faCheck} />
-      </StyledSymbol>
-      <StyledWelcome>
-        Welcome Back
-        <br />
-        <strong>{user.name}</strong>
-      </StyledWelcome>
-      <StyledLogout type='button' onClick={() => handleLogout()}>
-        {submitting ? <Spinner /> : "Logout"}
-      </StyledLogout>
+      <StyledContent>
+        <StyledSymbol>
+          <StyledIcon icon={faCheck} />
+        </StyledSymbol>
+        <StyledWelcome>
+          Welcome Back
+          <br />
+          <strong>{user.name}</strong>
+        </StyledWelcome>
+        <StyledLogout
+          type='button'
+          onClick={() => handleLogout()}
+          disabled={submitting}
+        >
+          {submitting ? <Spinner /> : "Logout"}
+        </StyledLogout>
+      </StyledContent>
     </StyledLoginSuccessDialog>
   )
 }

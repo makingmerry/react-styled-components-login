@@ -4,10 +4,6 @@ import styled from "styled-components"
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const StyledButton = styled.button`
-  --primary-button-bg-from: var(--indigo);
-  --primary-button-bg-to: var(--blue);
-  --primary-button-text-color: var(--white);
-
   position: relative;
   z-index: 1;
   display: block;
@@ -21,12 +17,8 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   text-align: center;
   letter-spacing: var(--tracking-wider);
-  background: linear-gradient(
-    to right,
-    var(--primary-button-bg-from),
-    var(--primary-button-bg-to)
-  );
-  color: var(--primary-button-text-color);
+  background: linear-gradient(to right, var(--indigo), var(--blue));
+  color: var(--white);
   border: 0;
   border-radius: var(--rounded-md);
   transition: color var(--transition-fast);
@@ -48,7 +40,7 @@ const StyledButton = styled.button`
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--primary-button-bg-to);
+    background: var(--blue);
     opacity: 0;
     transition: opacity var(--transition-fast),
       background var(--transition-fast);
