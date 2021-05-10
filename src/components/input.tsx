@@ -35,9 +35,8 @@ const StyledField = styled.input<{ errors: boolean }>`
   font-size: inherit;
   color: var(--dark-gray);
   background: var(--near-white);
-  border: 1px solid var(--gray);
   border: 1px solid
-    ${({ errors }) => (errors ? "var(--error-color)" : "var(--gray)")};
+    ${({ errors }) => (errors ? "var(--error-color)" : "var(--dark-silver)")};
   border-radius: var(--rounded-md);
   transition: background var(--transition-fast), color var(--transition-fast),
     border-color var(--transition-fast);

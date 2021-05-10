@@ -8,8 +8,19 @@ import Spinner from "components/spinner"
 
 const StyledFormPanel = styled.div`
   height: 100%;
-  padding: 3rem 2rem 3.5rem;
+  padding: 3rem 2rem 2.5rem;
   background: var(--white);
+`
+
+const StyledHeading = styled.h1`
+  margin-bottom: 0.25rem;
+  font-size: var(--text-lg);
+  font-weight: 700;
+`
+
+const StyledIntro = styled.p`
+  margin-bottom: 1.5rem;
+  color: var(--mid-gray);
 `
 
 interface IInputs {
@@ -42,21 +53,21 @@ const constraints: IConstraints = {
   username: {
     required: {
       validator: (input) => checkEmpty(input),
-      message: "Username is required",
+      message: "Please fill in your username",
     },
     max: {
       validator: (input) => checkMax(input, 60),
-      message: "Maximum of 60 characters",
+      message: "Reached 60 character limit",
     },
   },
   password: {
     required: {
       validator: (input) => checkEmpty(input),
-      message: "Password is required",
+      message: "Please fill in your password",
     },
     max: {
       validator: (input) => checkMax(input, 60),
-      message: "Maximum of 60 characters",
+      message: "Reached 60 character limit",
     },
   },
 }
@@ -147,11 +158,23 @@ const LoginPanel: FC = () => {
       setError(error.message)
     } finally {
       setSubmitting(false)
+      setValues({
+        username: "",
+        password: "",
+      })
     }
   }
 
   return (
     <StyledFormPanel>
+      <StyledHeading>Let's sign you in</StyledHeading>
+      <StyledIntro>
+        Refer to{" "}
+        <a href='https://github.com/makingmerry/react-styled-components-login'>
+          repository
+        </a>{" "}
+        for guest credentials
+      </StyledIntro>
       <form onSubmit={(e) => handleSubmit(e)} noValidate>
         <Input
           label='Username'

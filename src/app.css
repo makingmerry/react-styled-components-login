@@ -6,6 +6,7 @@
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-md: 1.15rem;
+  --text-lg: 1.325rem;
 
   --leading-none: 1;
   --leading-tight: 1.25;
@@ -30,12 +31,14 @@
   --light-indigo: #c7d2fe;
   --indigo: #4338ca;
   --blue: #2563eb;
+  --dark-blue: #1e40af;
   --light-green: #a7f3d0;
   --green: #6ee7b7;
   --white: #fff;
   --near-white: #f4f5f7;
   --light-gray: #e5e7eb;
   --silver: #d1d5db;
+  --dark-silver: #b6bece;
   --gray: #9ca3af;
   --mid-gray: #6b7280;
   --dark-gray: #374151;
@@ -67,4 +70,15 @@ body,
 
 button:focus {
   outline: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--blue);
+  transition: color var(--transition-fast);
+}
+
+a:hover,
+a:focus {
+  color: var(--dark-blue);
 }

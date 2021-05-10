@@ -37,7 +37,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
   transform: translate(-50%, -50%);
 `
 
-const StyledWelcome = styled.div`
+const StyledWelcome = styled.p`
   margin-top: 0.75rem;
   font-size: var(--text-md);
   font-weight: 600;
@@ -115,9 +115,8 @@ const LoginSuccessDialog: FC = () => {
               <StyledIcon icon={faCheck} />
             </StyledSymbol>
             <StyledWelcome>
-              Welcome Back
-              <br />
-              <strong>{user.name}</strong>
+              Welcome back <strong>{user.name}</strong>,<br />
+              We've missed you!
             </StyledWelcome>
             <StyledLogout
               type='button'
