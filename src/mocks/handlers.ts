@@ -35,7 +35,7 @@ export const handlers = [
     if (!isUser) {
       return res(
         ctx.status(403),
-        ctx.delay(2000),
+        ctx.delay(500),
         ctx.json({ message: "User not found" })
       )
     }
@@ -44,7 +44,7 @@ export const handlers = [
     if (!isAuthenticated) {
       return res(
         ctx.status(403),
-        ctx.delay(2000),
+        ctx.delay(500),
         ctx.json({ message: "Username/password is incorrect" })
       )
     }
@@ -53,9 +53,9 @@ export const handlers = [
       name: isUser.name,
       email: isUser.email,
     }
-    return res(ctx.status(200), ctx.delay(2000), ctx.json(user))
+    return res(ctx.status(200), ctx.delay(500), ctx.json(user))
   }),
   rest.post("/api/logout", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.delay(2000), ctx.json({ success: true }))
+    return res(ctx.status(200), ctx.delay(250), ctx.json({ success: true }))
   }),
 ]

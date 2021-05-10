@@ -1,5 +1,6 @@
 import { useState, FC } from "react"
 import styled from "styled-components"
+import { motion, AnimatePresence } from "framer-motion"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { useAuth } from "auth/auth-context"
@@ -14,18 +15,18 @@ const StyledLoginSuccessDialog = styled.div`
   background: linear-gradient(to right, var(--indigo), var(--blue));
 `
 
-const StyledContent = styled.div`
+const StyledContent = styled(motion.div)`
   display: table-cell;
   vertical-align: middle;
 `
 
-const StyledSymbol = styled.div`
+const StyledSymbol = styled(motion.div)`
   position: relative;
   width: 3.5rem;
   height: 3.5rem;
   margin: 0 auto;
   color: var(--green);
-  border: 0.2rem solid var(--green);
+  border: 0.2rem solid currentColor;
   border-radius: 100vw;
 `
 
@@ -83,27 +84,51 @@ const LoginSuccessDialog: FC = () => {
     }
   }
 
-  if (!user) return null
-
   return (
     <StyledLoginSuccessDialog>
-      <StyledContent>
-        <StyledSymbol>
-          <StyledIcon icon={faCheck} />
-        </StyledSymbol>
-        <StyledWelcome>
-          Welcome Back
-          <br />
-          <strong>{user.name}</strong>
-        </StyledWelcome>
-        <StyledLogout
-          type='button'
-          onClick={() => handleLogout()}
-          disabled={submitting}
-        >
-          {submitting ? <Spinner /> : "Logout"}
-        </StyledLogout>
-      </StyledContent>
+      <AnimatePresence>
+        {user && (
+          <StyledContent
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  delayChildren: 0.15,
+                },
+              },
+            }}
+            initial='hidden'
+            animate='show'
+            exit='hidden'
+            transition={{
+              type: "spring",
+              stiffness: 75,
+            }}
+          >
+            <StyledSymbol
+              variants={{
+                hidden: { scale: 1.5 },
+                show: { scale: 1 },
+              }}
+            >
+              <StyledIcon icon={faCheck} />
+            </StyledSymbol>
+            <StyledWelcome>
+              Welcome Back
+              <br />
+              <strong>{user.name}</strong>
+            </StyledWelcome>
+            <StyledLogout
+              type='button'
+              onClick={() => handleLogout()}
+              disabled={submitting}
+            >
+              {submitting ? <Spinner /> : "Logout"}
+            </StyledLogout>
+          </StyledContent>
+        )}
+      </AnimatePresence>
     </StyledLoginSuccessDialog>
   )
 }
