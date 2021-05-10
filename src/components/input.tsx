@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes } from "react"
+import { useState, FC, InputHTMLAttributes } from "react"
 import styled from "styled-components"
 
 const StyledInput = styled.label`
@@ -78,6 +78,36 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   errors: string[]
 }
 
+interface IFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  errors: boolean
+}
+
+const Field: FC<IFieldProps> = ({ errors, ...props }) => (
+  <StyledField errors={errors} {...props} />
+)
+
+const PasswordField: FC<IFieldProps> = ({ errors, type, ...props }) => {
+  const [show, setShow] = useState(false)
+
+  return (
+    <>
+      <button
+        type='button'
+        onClick={() => {
+          setShow(!show)
+        }}
+      >
+        Show
+      </button>
+      <StyledField
+        type={show ? "text" : "password"}
+        errors={errors}
+        {...props}
+      />
+    </>
+  )
+}
+
 const Input: FC<IInputProps> = ({ label, errors, ...props }) => {
   return (
     <StyledInput>
@@ -86,7 +116,11 @@ const Input: FC<IInputProps> = ({ label, errors, ...props }) => {
           {label} {props.required && <StyledRequired>*</StyledRequired>}
         </StyledLabel>
       )}
-      <StyledField errors={errors.length > 0} {...props} />
+      {props.type === "password" ? (
+        <PasswordField errors={errors.length > 0} {...props} />
+      ) : (
+        <Field errors={errors.length > 0} {...props} />
+      )}
       {errors.length > 0 && (
         <StyledErrors>
           {errors.map((error, i) => (
