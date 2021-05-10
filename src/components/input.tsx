@@ -1,5 +1,7 @@
 import { useState, FC, InputHTMLAttributes } from "react"
 import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 const StyledInput = styled.label`
   display: block;
@@ -27,6 +29,10 @@ const StyledRequired = styled.span`
   color: var(--error-color);
 `
 
+const StyledFieldWithIconFrame = styled.div`
+  position: relative;
+`
+
 const StyledField = styled.input<{ errors: boolean }>`
   display: block;
   width: 100%;
@@ -52,6 +58,31 @@ const StyledField = styled.input<{ errors: boolean }>`
     background: var(--light-gray);
     color: var(--gray);
   }
+
+  ${StyledFieldWithIconFrame} & {
+    padding-right: 2.5rem;
+  }
+`
+
+const StyledFieldIconButton = styled.button<{ active: boolean }>`
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 0;
+  width: 2.5rem;
+  height: 100%;
+  text-align: center;
+  padding: 0;
+  color: var(--dark-gray);
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  transform: translate(0, -50%);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--blue);
+  }
 `
 
 const StyledErrors = styled.ul`
@@ -73,11 +104,6 @@ const StyledErrorMessage = styled.li`
   }
 `
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  errors: string[]
-}
-
 interface IFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   errors: boolean
 }
@@ -90,22 +116,28 @@ const PasswordField: FC<IFieldProps> = ({ errors, type, ...props }) => {
   const [show, setShow] = useState(false)
 
   return (
-    <>
-      <button
-        type='button'
-        onClick={() => {
-          setShow(!show)
-        }}
-      >
-        Show
-      </button>
+    <StyledFieldWithIconFrame>
       <StyledField
         type={show ? "text" : "password"}
         errors={errors}
         {...props}
       />
-    </>
+      <StyledFieldIconButton
+        type='button'
+        active={show}
+        onClick={() => {
+          setShow(!show)
+        }}
+      >
+        <FontAwesomeIcon icon={show ? faEyeSlash : faEye} />
+      </StyledFieldIconButton>
+    </StyledFieldWithIconFrame>
   )
+}
+
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string
+  errors: string[]
 }
 
 const Input: FC<IInputProps> = ({ label, errors, ...props }) => {
