@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Login Panel
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Guest Credentials
+
+To authenticate the login form, you can use these mock guest credentials:
+
+| Username | Password |
+| johndoe | hRay2#0&AvcCUt7S |
+| janedoe | Ag3E5#sKzjea3vay |
 
 ## Available Scripts
 

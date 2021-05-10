@@ -74,10 +74,13 @@ const constraints: IConstraints = {
 
 const LoginPanel: FC = () => {
   const { user, login } = useAuth()
-  const [values, setValues] = useState<IInputs>({
-    username: "din-djarin",
-    password: "Grogu123",
-  })
+  const [values, setValues] = useState<IInputs>(
+    // populate mocked login for success flow
+    {
+      username: "johndoe",
+      password: "hRay2#0&AvcCUt7S",
+    }
+  )
   const constraintsRef = useRef<IConstraints>(constraints)
   const [inputErrors, setInputErrors] = useState<IInputErrors>({
     username: [],

@@ -14,16 +14,16 @@ interface IUser {
 
 const users: IUser[] = [
   {
-    username: "din-djarin",
-    password: "Grogu123",
-    name: "Din Djarin",
-    email: "din.djarin@email.com",
+    username: "johndoe",
+    password: "hRay2#0&AvcCUt7S",
+    name: "John Doe",
+    email: "john.doe@email.com",
   },
   {
-    username: "moff-gideon",
-    password: "DarkSaber",
-    name: "Moff Gideon",
-    email: "moff.gideon@email.com",
+    username: "janedoe",
+    password: "Ag3E5#sKzjea3vay",
+    name: "Jane Doe",
+    email: "jane.doe@email.com",
   },
 ]
 
@@ -31,15 +31,17 @@ export const handlers = [
   rest.post("/api/login", (req, res, ctx) => {
     const { username, password } = req.body as ICredentials
 
+    // check user exists
     const isUser = users.find((user) => user.username === username) || false
     if (!isUser) {
       return res(
-        ctx.status(403),
+        ctx.status(404),
         ctx.delay(500),
         ctx.json({ message: "We cannot find an account with that username" })
       )
     }
 
+    // check user credentials are valid
     const isAuthenticated = isUser.password === password
     if (!isAuthenticated) {
       return res(
@@ -49,6 +51,7 @@ export const handlers = [
       )
     }
 
+    // return user details
     const user = {
       name: isUser.name,
       email: isUser.email,

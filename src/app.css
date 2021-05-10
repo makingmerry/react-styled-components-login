@@ -10,10 +10,8 @@
 
   --leading-none: 1;
   --leading-tight: 1.25;
-  --leading-snug: 1.375;
   --leading-normal: 1.5;
 
-  --tracking-tight: -0.025em;
   --tracking-normal: 0em;
   --tracking-slight: 0.025em;
   --tracking-wide: 0.05em;
@@ -66,6 +64,13 @@ body,
   line-height: var(--leading-normal);
   color: var(--black);
   background: var(--light-gray);
+}
+
+input[type="text"],
+input[type="password"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 button:focus {
