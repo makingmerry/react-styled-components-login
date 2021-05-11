@@ -48,8 +48,7 @@ const StyledWelcome = styled.p`
 const StyledLogout = styled.button`
   display: inline-block;
   margin-top: 1rem;
-  padding: 0;
-  padding-bottom: 0.1rem;
+  padding: 0.25rem 0.5rem;
   font-family: inherit;
   font-weight: 700;
   text-transform: uppercase;
