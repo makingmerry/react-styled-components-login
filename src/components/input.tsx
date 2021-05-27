@@ -80,7 +80,8 @@ const StyledFieldIconButton = styled.button<{ active: boolean }>`
   transform: translate(0, -50%);
   transition: color var(--transition-fast);
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: var(--blue);
   }
 `
@@ -128,9 +129,14 @@ const PasswordField: FC<IFieldProps> = ({ errors, type, ...props }) => {
       />
       <StyledFieldIconButton
         type='button'
+        aria-labelledby='show-password-button-label'
         active={show}
         onClick={() => handleToggle()}
+        disabled={props.disabled}
       >
+        <span id='show-password-button-label' hidden>
+          {show ? "Hide" : "Show"} password
+        </span>
         <FontAwesomeIcon icon={show ? faEyeSlash : faEye} />
       </StyledFieldIconButton>
     </StyledFieldWithIconFrame>

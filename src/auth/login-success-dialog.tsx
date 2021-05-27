@@ -59,7 +59,8 @@ const StyledLogout = styled.button`
   transition: color var(--transition-fast);
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: var(--light-green);
   }
 

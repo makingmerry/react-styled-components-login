@@ -1,4 +1,4 @@
-import { useEffect, FC } from "react"
+import { useState, useEffect, FC } from "react"
 import styled from "styled-components"
 import { motion, useAnimation } from "framer-motion"
 import { useAuth } from "auth/auth-context"
@@ -32,9 +32,12 @@ const StyledCard = styled(motion.div)`
 `
 
 // box-shadow adapted from https://shadows.brumm.af/
-const StyledCardFront = styled.div`
+const StyledCardFront = styled.div<{
+  flipped: boolean
+}>`
   backface-visibility: hidden;
   overflow: hidden;
+  visibility: ${({ flipped }) => (flipped ? "hidden" : "visible")};
   border-radius: var(--rounded-md);
   box-shadow: 0 0.175rem 0.1375rem rgba(0, 0, 0, 0.034),
     0 0.41875rem 0.33125rem rgba(0, 0, 0, 0.048),
@@ -60,21 +63,32 @@ const StyledCardBack = styled.div`
 const Login: FC = () => {
   const controls = useAnimation()
   const { user } = useAuth()
+  const [flipped, setFlipped] = useState(false)
 
   // flip from login to success if logged in and vice versa
   useEffect(() => {
+    const flipToBack = async () => {
+      await controls.start("back")
+      setFlipped(true)
+    }
+
+    const flipToFront = async () => {
+      setFlipped(false)
+      await controls.start("front")
+    }
+
     if (user) {
-      controls.start("show")
+      flipToBack()
       return
     }
-    controls.start("hidden")
+    flipToFront()
   }, [controls, user])
 
   return (
     <StyledLogin
       variants={{
-        hidden: {},
-        show: {},
+        front: {},
+        back: {},
       }}
       transition={{
         staggerChildren: 0.15,
@@ -83,19 +97,19 @@ const Login: FC = () => {
     >
       <StyledBackground
         variants={{
-          hidden: { translateX: 0 },
-          show: { translateX: "100%" },
+          front: { translateX: 0 },
+          back: { translateX: "100%" },
         }}
         transition={{ type: "tween", velocity: 50 }}
       />
       <StyledFrame>
         <StyledCard
           variants={{
-            hidden: { rotateY: "0deg" },
-            show: { rotateY: "180deg" },
+            front: { rotateY: "0deg" },
+            back: { rotateY: "180deg" },
           }}
         >
-          <StyledCardFront>
+          <StyledCardFront flipped={flipped}>
             <LoginForm />
           </StyledCardFront>
           <StyledCardBack>
